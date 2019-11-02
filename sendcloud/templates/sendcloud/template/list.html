@@ -1,0 +1,57 @@
+{% extends "admin/change_list.html" %}
+{% load i18n %}
+{% load admin_static %}
+{% load sendcloud_tags %}
+
+{% block extrastyle %}
+    {{ block.super }}
+  <link rel="stylesheet" type="text/css" href="{% static "admin/css/changelists.css" %}">
+{% endblock %}
+
+{% block breadcrumbs %}
+  <div class="breadcrumbs">
+    <a href="{% url 'admin:index' %}">{% trans "home" %}</a> &rsaquo;
+    <a href="{% url 'send_cloud_dashboard' %}">{% trans "django-sendcloud" %}</a> &rsaquo;
+      {% trans "sendcloud-mail-template" %}
+  </div>
+{% endblock %}
+
+{% block content %}
+  <div class="module" id="changelist">
+    <div class="results">
+      <table id="result_list">
+        <thead>
+        <tr>
+          <th>{% trans 'template-name' %}</th>
+          <th>{% trans 'template-invoke-name' %}</th>
+          <th>{% trans 'template-type' %}</th>
+          <th>{% trans 'template-created-at' %}</th>
+          <th>{% trans 'template-updated-at' %}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for row in page_obj %}
+          <tr>
+            <td>{{ row.name }}</td>
+            <td>{{ row.invokeName }}</td>
+            <td>{{ row.templateType|template_type }}</td>
+            <td>{{ row.gmtCreated }}</td>
+            <td>{{ row.gmtUpdated }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <p class="paginator">
+        {% for p in paginator.page_range %}
+            {% if p == page %}
+              <span class="this-page">{{ p }}</span>
+            {% elif forloop.last %}
+              <a href="?page={{ p }}" class="end">{{ p }}</a>
+            {% else %}
+              <a href="?page={{ p }}">{{ p }}</a>
+            {% endif %}
+        {% endfor %}
+    </p>
+  </div>
+{% endblock %}

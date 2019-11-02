@@ -1,0 +1,124 @@
+{% extends "admin/index.html" %}
+{% load i18n %}
+{% load admin_static %}
+{% load sendcloud_tags %}
+
+{% block extrastyle %}{{ block.super }}
+  <style>.dashboard #content {
+    width: 60%;
+  }</style>
+{% endblock %}
+
+{% block content %}
+  <div id="content-main">
+    <div class="sendcloud-template module">
+      <table>
+        <caption>{% trans "sendcloud-mail-template" %}</caption>
+        <thead>
+        <tr>
+          <th>{% trans 'template-name' %}</th>
+          <th>{% trans 'template-invoke-name' %}</th>
+          <th>{% trans 'template-type' %}</th>
+          <th>{% trans 'template-created-at' %}</th>
+          <th>{% trans 'template-updated-at' %}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for row in template_list %}
+          <tr>
+            <td>{{ row.name }}</td>
+            <td>{{ row.invokeName }}</td>
+            <td>{{ row.templateType|template_type }}</td>
+            <td>{{ row.gmtCreated }}</td>
+            <td>{{ row.gmtUpdated }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="module">
+      <table>
+        <caption>{% trans "sendcloud-invalid-stat" %}</caption>
+        <thead>
+          <tr>
+            <th>{% trans "send-date" %}</th>
+            <th>{% trans "send-user" %}</th>
+            <th>{% trans "send-domain" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for row in invalid_stat %}
+          <tr>
+            <td>{{ row.sendDate }}</td>
+            <td>{{ row.apiUser }}</td>
+            <td>{{ row.domain }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}
+
+{% block sidebar %}
+  <div id="content-related">
+    <div class="module" id="recent-actions-module">
+      <h2>{% trans 'recent-account-info' %}</h2>
+      <table id="result_list">
+        <thead>
+        <tr>
+          <th>{% trans 'name' %}</th>
+          <th>{% trans 'info' %}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>{% trans 'username' %}</td>
+          <td>{{ userName }}</td>
+        </tr>
+        <tr>
+          <td>{% trans 'phone' %}</td>
+          <td>{{ phone }}</td>
+        </tr>
+
+        <tr>
+          <td>{% trans 'email' %}</td>
+          <td>{{ email }}</td>
+        </tr>
+
+        <tr>
+          <td>{% trans 'avaliable-balance' %}</td>
+          <td>{{ avaliableBalance }}</td>
+        </tr>
+
+        <tr>
+          <td>{% trans 'balance' %}</td>
+          <td>{{ balance }}</td>
+        </tr>
+
+        <tr>
+          <td>{% trans 'reputation' %}</td>
+          <td>{{ reputation }} %</td>
+        </tr>
+
+        <tr>
+          <td>{% trans 'account-type' %}</td>
+          <td>{{ accountType }}</td>
+        </tr>
+
+        <tr>
+          <td>{% trans 'today-used-quota' %}</td>
+          <td>{{ todayUsedQuota }}</td>
+        </tr>
+
+        <tr>
+          <td>{% trans 'quota' %}</td>
+          <td>{{ quota }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+{% endblock %}

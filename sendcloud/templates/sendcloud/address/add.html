@@ -1,0 +1,52 @@
+{% extends 'admin/base_site.html' %}
+
+{% load admin_static  %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <style>
+        .data {
+            display: inline-block;
+            float: left;
+            width: 80%;
+        }
+    </style>
+    <link href="{% static 'admin/css/forms.css' %}" type="text/css" rel="stylesheet">
+{% endblock %}
+
+
+{% block breadcrumbs %}
+    <div class="breadcrumbs">
+        <a href="{% url 'admin:index' %}">Home</a> &rsaquo;
+        <a href="{% url 'send_cloud_dashboard' %}">Django SendCloud</a> &rsaquo;
+    </div>
+{% endblock %}
+
+
+
+{% block content %}
+
+    <div id="content-main">
+    {{ form.error }}
+        <form action="" method="post" novalidate>
+            {% csrf_token %}
+            <fieldset class="module aligned">
+                {% for field in form %}
+                    <div class="form-row">
+                        <div>
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.help_text %}
+                                <div class="help">{{ field.help_text|safe }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </fieldset>
+
+            <div class="submit-row">
+                <input class="default" name="_save" type="submit" value="save" />
+            </div>
+        </form>
+    </div>
+{% endblock %}
