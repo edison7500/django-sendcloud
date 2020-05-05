@@ -7,5 +7,3 @@ class SendCloudAPIError(Exception):
 
 class SendCloudConnectionError(exceptions.ConnectionError):
     pass
-
-

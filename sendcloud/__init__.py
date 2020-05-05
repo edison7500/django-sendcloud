@@ -1,15 +1,18 @@
 __version__ = "1.0.0"
 
-import requests
 import logging
+import warnings
+
+try:
+    import requests
+    from sendcloud.exceptions import SendCloudAPIError
+except ImportError:
+    warnings.warn("please run, pip install requests")
 
 from django.conf import settings
 from django.core.mail.backends.base import BaseEmailBackend
 from django.core.mail.message import sanitize_address
-from sendcloud.exceptions import SendCloudAPIError
 from .conf import get_send_mail_url
-
-# send_cloud_v2_send_api = "http://api.sendcloud.net/apiv2/mail/send"
 
 logger = logging.getLogger("sendcloud")
 
