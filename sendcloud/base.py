@@ -1,16 +1,12 @@
 import logging
 import requests
 from .exceptions import SendCloudAPIError
-from .conf import (
-    get_send_cloud_batch_user,
-    get_send_cloud_batch_key,
-)
+from .conf import get_send_cloud_batch_user, get_send_cloud_batch_key
 
-logger = logging.getLogger('sendcloud')
+logger = logging.getLogger("sendcloud")
 
 
 class SendCloudAPIBase(object):
-
     def __init__(self):
         pass
 
@@ -23,10 +19,7 @@ class SendCloudAPIBase(object):
         return get_send_cloud_batch_key()
 
     def get_payload(self):
-        _data = {
-            "apiUser": self.app_user,
-            "apiKey": self.app_key
-        }
+        _data = {"apiUser": self.app_user, "apiKey": self.app_key}
         return _data
 
     def get(self, url, **kwargs):

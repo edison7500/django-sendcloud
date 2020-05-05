@@ -13,11 +13,11 @@ logger = logging.getLogger("sendcloud")
 
 
 class SendCloudBackend(BaseEmailBackend):
-
     def __init__(self, fail_silently=False, *args, **kwargs):
 
-        super(SendCloudBackend, self).__init__(fail_silently=fail_silently,
-                                               *args, **kwargs)
+        super(SendCloudBackend, self).__init__(
+            fail_silently=fail_silently, *args, **kwargs
+        )
 
     @property
     def app_user(self):
@@ -47,10 +47,11 @@ class SendCloudBackend(BaseEmailBackend):
         # print (dir(email_message))
         if not email_message.recipients():
             return False
-        from_email = sanitize_address(email_message.from_email,
-                                      email_message.encoding)
-        recipients = [sanitize_address(addr, email_message.encoding)
-                      for addr in email_message.recipients()]
+        from_email = sanitize_address(email_message.from_email, email_message.encoding)
+        recipients = [
+            sanitize_address(addr, email_message.encoding)
+            for addr in email_message.recipients()
+        ]
 
         params = {
             "apiUser": self.app_user,
@@ -62,9 +63,7 @@ class SendCloudBackend(BaseEmailBackend):
             "html": email_message.body,
         }
         if template:
-            params.update({
-                "templateInvokeName": template,
-            })
+            params.update({"templateInvokeName": template})
 
         r = requests.post(self.api_url, files={}, data=params)
 
@@ -74,9 +73,9 @@ class SendCloudBackend(BaseEmailBackend):
             return False
 
         res = r.json()
-        if not res['result']:
-            logger.info(res['message'])
-            raise SendCloudAPIError(res['message'])
+        if not res["result"]:
+            logger.info(res["message"])
+            raise SendCloudAPIError(res["message"])
         return True
 
     def send_messages(self, email_messages):

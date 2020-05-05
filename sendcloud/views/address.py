@@ -5,7 +5,7 @@ from django.views import generic
 from sendcloud.core.address_list import AddressListAPI
 from sendcloud.forms.address import AddressListForm
 
-logger = logging.getLogger('django')
+logger = logging.getLogger("django")
 
 
 class AddressListView(generic.ListView):
@@ -20,4 +20,4 @@ class AddressListView(generic.ListView):
 class AddressCreateView(generic.CreateView):
     template_name = "sendcloud/address/add.html"
     form_class = AddressListForm
-    success_url = reverse_lazy('send_cloud_address_list')
+    success_url = reverse_lazy("send_cloud_address_list")

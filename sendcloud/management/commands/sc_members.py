@@ -4,7 +4,7 @@ from django.core.management.base import BaseCommand
 
 from sendcloud.core.members import MemberAPI
 
-logger = logging.getLogger('sendcloud')
+logger = logging.getLogger("sendcloud")
 
 
 class Command(BaseCommand):
@@ -14,51 +14,58 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument(
-            '-L', '--address-list',
+            "-L",
+            "--address-list",
             # action='store_true',
             # nargs='+',
-            dest='mail_list',
+            dest="mail_list",
             type=str,
-            help='Send Cloud Mail Address List',
+            help="Send Cloud Mail Address List",
         )
 
         parser.add_argument(
-            '-m', '--member',
-            dest='member',
+            "-m",
+            "--member",
+            dest="member",
             type=str,
-            help='Send Cloud Mail Address List Member'
+            help="Send Cloud Mail Address List Member",
         )
 
         parser.add_argument(
-            '-n', '--new-member',
-            dest='new_member',
+            "-n",
+            "--new-member",
+            dest="new_member",
             type=str,
             help="Send Cloud Mail Address List update Old Member to New Member",
         )
 
         parser.add_argument(
-            '-a', '--add',
-            dest='add',
-            action='store_true',
-            help='Add member into Address list',
+            "-a",
+            "--add",
+            dest="add",
+            action="store_true",
+            help="Add member into Address list",
         )
 
         parser.add_argument(
-            '-d', '--delete',
-            dest='delete',
-            action='store_true',
+            "-d",
+            "--delete",
+            dest="delete",
+            action="store_true",
             help="Delete member from Address list",
         )
 
         parser.add_argument(
-            '-u', '--update',
-            dest='update',
-            action='store_true',
-            help='Update member from Address list'
+            "-u",
+            "--update",
+            dest="update",
+            action="store_true",
+            help="Update member from Address list",
         )
 
         parser.add_argument(
-            '-l', '--list',
+            "-l",
+            "--list",
             dest="list",
             action="store_true",
             help="List member from Address list",
@@ -79,30 +86,36 @@ class Command(BaseCommand):
 
         # Header
         click.echo(
-            """| %-30s|%15s |%20s |%20s |%20s |""" %
-            ("member", "name", "vars", "gmtCreated", "gmtUpdated",)
+            """| %-30s|%15s |%20s |%20s |%20s |"""
+            % ("member", "name", "vars", "gmtCreated", "gmtUpdated")
         )
 
         self._print_separator()
 
         for row in statistics:
             click.echo(
-                """| %-30s|%15s |%20s |%20s |%20s |""" %
-                (row['member'], row['name'], row['vars'], row['gmtCreated'], row['gmtUpdated'])
+                """| %-30s|%15s |%20s |%20s |%20s |"""
+                % (
+                    row["member"],
+                    row["name"],
+                    row["vars"],
+                    row["gmtCreated"],
+                    row["gmtUpdated"],
+                )
             )
 
         self._print_separator()
 
     def handle(self, *args, **options):
-        _mail_list = options.get('mail_list')
+        _mail_list = options.get("mail_list")
 
-        _list = options.get('list')
-        _add = options.get('add')
-        _delete = options.get('delete')
-        _update = options.get('update')
+        _list = options.get("list")
+        _add = options.get("add")
+        _delete = options.get("delete")
+        _update = options.get("update")
 
-        _member = options.get('member')
-        _new_member = options.get('new_member')
+        _member = options.get("member")
+        _new_member = options.get("new_member")
 
         if _list:
             r = MemberAPI().list(address=_mail_list)
@@ -126,11 +139,9 @@ class Command(BaseCommand):
 
         if _update:
             r = MemberAPI().update(
-                address=_mail_list,
-                members=[_member],
-                new_members=[_new_member],
+                address=_mail_list, members=[_member], new_members=[_new_member]
             )
-            if r['addressNotExistCount']:
+            if r["addressNotExistCount"]:
                 self.stdout.write(
                     self.style.ERROR(
                         "member ({member}) Not Exist!".format(member=_member)
@@ -140,9 +151,8 @@ class Command(BaseCommand):
                 self.stdout.write(
                     self.style.SUCCESS(
                         "update member {member} to ({new_member}) Success".format(
-                            member=_member,
-                            new_member=_new_member
+                            member=_member, new_member=_new_member
                         )
+                    )
                 )
-            )
         return

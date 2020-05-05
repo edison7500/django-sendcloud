@@ -16,14 +16,11 @@
 
 from .templates import MailTemplateListView
 from .members import MemberListView
-from .address import (
-    AddressListView,
-    AddressCreateView,
-)
+from .address import AddressListView, AddressCreateView
 
 __all__ = [
-    'MailTemplateListView',
-    'AddressListView',
-    'AddressCreateView',
-    'MemberListView',
+    "MailTemplateListView",
+    "AddressListView",
+    "AddressCreateView",
+    "MemberListView",
 ]

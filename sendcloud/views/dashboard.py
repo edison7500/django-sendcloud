@@ -14,10 +14,7 @@ class UserInfoMixin(object):
 
 
 class DashboardView(
-    TemplateListMixin,
-    MailStatusMixin,
-    UserInfoMixin,
-    generic.TemplateView
+    TemplateListMixin, MailStatusMixin, UserInfoMixin, generic.TemplateView
 ):
     template_name = "sendcloud/dashboard.html"
 
@@ -28,8 +25,10 @@ class DashboardView(
         logger.info(self.get_invalid_stat())
 
         _context.update(_userinfo)
-        _context.update({
-            "template_list": self.get_template_list(),
-            "invalid_stat": self.get_invalid_stat(),
-        })
+        _context.update(
+            {
+                "template_list": self.get_template_list(),
+                "invalid_stat": self.get_invalid_stat(),
+            }
+        )
         return _context

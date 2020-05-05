@@ -1,13 +1,8 @@
 import logging
 from .base import SendCloudAPIBase
-from ..conf import (
-    address_list,
-    address_add,
-    address_update,
-    address_delete,
-)
+from ..conf import address_list, address_add, address_update, address_delete
 
-logger = logging.getLogger('django')
+logger = logging.getLogger("django")
 
 
 class AddressListAPI(SendCloudAPIBase):
@@ -32,27 +27,22 @@ class AddressListAPI(SendCloudAPIBase):
         return address_delete()
 
     def list(self, address=[], star=0, limit=100):
-        _data = {
-            "star": star,
-            "limit": limit,
-        }
+        _data = {"star": star, "limit": limit}
 
         if len(address) > 1:
             address_string = ";".join(address)
-            _data.update({
-                "address": address_string,
-            })
+            _data.update({"address": address_string})
 
         r = self.post(url=self.address_list_url, **_data)
         logger.info(r)
         return r
 
     def add(self, **kwargs):
-        kwargs.setdefault('listType', 0)
+        kwargs.setdefault("listType", 0)
 
-        _address = kwargs.pop('address', None)
-        _name = kwargs.pop('name', None)
-        _desc = kwargs.pop('desc', None)
+        _address = kwargs.pop("address", None)
+        _name = kwargs.pop("name", None)
+        _desc = kwargs.pop("desc", None)
 
         if _address is None:
             raise ValueError("The given address have must be set")
@@ -60,29 +50,21 @@ class AddressListAPI(SendCloudAPIBase):
             _name = _address.split("@")[0]
             # raise ValueError("The given name have must be set")
 
-        _data = {
-            "address": _address,
-            "name": _name,
-            "listType": kwargs.get('listType')
-        }
+        _data = {"address": _address, "name": _name, "listType": kwargs.get("listType")}
 
         if _desc is not None:
-            _data.update({
-                "desc": _desc,
-            })
+            _data.update({"desc": _desc})
 
         r = self.post(url=self.address_add_url, **_data)
         logger.info(r)
         return r
 
     def delete(self, **kwargs):
-        _address = kwargs.get('address', None)
+        _address = kwargs.get("address", None)
         if _address is None:
             raise ValueError("The given name have must be set")
 
-        _data = {
-            "address": _address,
-        }
+        _data = {"address": _address}
 
         r = self.post(url=self.address_delete_url, **_data)
         logger.info(r)

@@ -12,14 +12,10 @@ class TemplateType(IntEnum):
     Batch = 1
 
 
-ttype = {
-    TemplateType.Trigging: _("trigging"),
-    TemplateType.Batch: _("batch")
-}
+ttype = {TemplateType.Trigging: _("trigging"), TemplateType.Batch: _("batch")}
 
 
 @register.filter
 def template_type(value):
     # logger.info(TemplateType.Batch)
     return ttype[value]
-

@@ -1,19 +1,12 @@
 import logging
 import requests
-from ..exceptions import (
-    SendCloudAPIError,
-    SendCloudConnectionError
-)
-from ..conf import (
-    get_send_cloud_batch_user,
-    get_send_cloud_batch_key,
-)
+from ..exceptions import SendCloudAPIError, SendCloudConnectionError
+from ..conf import get_send_cloud_batch_user, get_send_cloud_batch_key
 
-logger = logging.getLogger('sendcloud')
+logger = logging.getLogger("sendcloud")
 
 
 class SendCloudAPIBase(object):
-
     def __init__(self):
         pass
 
@@ -32,14 +25,11 @@ class SendCloudAPIBase(object):
         try:
             number = int(number)
         except (TypeError, ValueError):
-            raise SendCloudAPIError('That page number is not an integer')
+            raise SendCloudAPIError("That page number is not an integer")
         return number
 
     def get_payload(self):
-        _data = {
-            "apiUser": self.app_user,
-            "apiKey": self.app_key
-        }
+        _data = {"apiUser": self.app_user, "apiKey": self.app_key}
         return _data
 
     def get(self, url, **kwargs):

@@ -3,7 +3,7 @@ from django.views import generic
 from sendcloud.core import TemplateAPI
 from sendcloud.core.paginator import Paginator
 
-logger = logging.getLogger('sendcloud')
+logger = logging.getLogger("sendcloud")
 
 
 class MailTemplateListView(generic.ListView):

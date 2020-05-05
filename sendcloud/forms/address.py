@@ -2,7 +2,7 @@ import logging
 from django import forms
 from sendcloud.core.address_list import AddressListAPI
 
-logger = logging.getLogger('django')
+logger = logging.getLogger("django")
 
 
 class AddressListForm(forms.Form):
@@ -18,4 +18,3 @@ class AddressListForm(forms.Form):
         address_list = AddressListAPI()
         r = address_list.add(**self.cleaned_data)
         return
-

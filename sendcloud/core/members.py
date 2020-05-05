@@ -1,14 +1,8 @@
 import logging
 from .base import SendCloudAPIBase
-from ..conf import (
-    member_list,
-    member_get,
-    member_delete,
-    member_update,
-    member_add,
-)
+from ..conf import member_list, member_get, member_delete, member_update, member_add
 
-logger = logging.getLogger('django')
+logger = logging.getLogger("django")
 
 
 class MemberAPI(SendCloudAPIBase):
@@ -49,30 +43,23 @@ class MemberAPI(SendCloudAPIBase):
     def list(self, address=None, star=0, limit=100):
         if address is None:
             raise ValueError("The given address have must be set!")
-        _data = {
-            "address": address,
-            'star': star,
-            'limit': limit,
-        }
+        _data = {"address": address, "star": star, "limit": limit}
         r = self.post(url=self.member_list_url, **_data)
         # logger.info(r)
 
-        self._count = r['info']['count']
-        self._total = r['info']['total']
+        self._count = r["info"]["count"]
+        self._total = r["info"]["total"]
 
-        return r['info']['dataList']
+        return r["info"]["dataList"]
 
     def add(self, address=None, members=[]):
         if address is None:
             raise ValueError("The given address have must be set!")
-        _data = {
-            "address": address,
-            "members": ';'.join(members),
-        }
+        _data = {"address": address, "members": ";".join(members)}
 
         r = self.post(url=self.member_add_url, **_data)
 
-        return r['info']
+        return r["info"]
 
     def update(self, address=None, members=[], new_members=[]):
         if address is None:
@@ -80,20 +67,17 @@ class MemberAPI(SendCloudAPIBase):
 
         _data = {
             "address": address,
-            "members": ';'.join(members),
-            "newMembers": ';'.join(new_members),
+            "members": ";".join(members),
+            "newMembers": ";".join(new_members),
         }
         r = self.post(url=self.member_update_url, **_data)
-        return r['info']
+        return r["info"]
 
     def delete(self, address=None, members=[]):
         if address is None:
             raise ValueError("The given address have must be set!")
 
-        _data = {
-            "address": address,
-            "members": ';'.join(members),
-        }
+        _data = {"address": address, "members": ";".join(members)}
         r = self.post(url=self.member_delete_url, **_data)
 
-        return r['info']
+        return r["info"]

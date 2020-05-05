@@ -2,11 +2,11 @@ import logging
 from django.views import generic
 from sendcloud.core.analytics import AnalyticsAPI
 
-logger = logging.getLogger('sendcloud')
+logger = logging.getLogger("sendcloud")
 
 
 class InvalidStatView(generic.ListView):
-    template_name = 'sendcloud/analytics/invalid_stat.html'
+    template_name = "sendcloud/analytics/invalid_stat.html"
 
     def get_queryset(self):
         a = AnalyticsAPI().invalid_stat()

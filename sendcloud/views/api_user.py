@@ -7,4 +7,4 @@ class APIUserListView(generic.ListView):
 
     def get_queryset(self):
         u = UserInfoAPI().api_user_list()
-        return u['info']['dataList']
+        return u["info"]["dataList"]

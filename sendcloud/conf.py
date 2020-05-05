@@ -40,7 +40,7 @@ SEND_CLOUD_DEFAULTS = {
     },
     "analytics": {
         "status": "{base_url}/data/emailStatus".format(base_url=BASE_URL),
-        "invalid_stat": "{base_url}/invalidstat/list".format(base_url=BASE_URL)
+        "invalid_stat": "{base_url}/invalidstat/list".format(base_url=BASE_URL),
     },
 }
 
